@@ -1,0 +1,2 @@
+php artisan multiauth:seed --role=super
+https://stackoverflow.com/questions/42863232/updating-multiple-records-using-eloquent-laravel-5-4
