@@ -32,7 +32,7 @@
                         <th colspan="2">Գործողություններ</th>
                     </tr>
                 </thead>
-                <tbody id="sortable">
+                <tbody>
                     @foreach($brands as $brand)
                     <tr class="brand">
                         <input type="hidden" class="brand_id" data-id="{{ $brand->id }}">
@@ -57,8 +57,7 @@
                                 @csrf
                             </form>
                         </td>
-                    </tr>
-                        
+                    </tr>     
                     @endforeach
                 </tbody>
             </table>
@@ -69,14 +68,110 @@
     </div>
 </div>
 </div>
+
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Բրենդներ</h4>
+        </div>
+        <div class="card-body">
+          <div id="accordion" role="tablist">
+            @php $a = 1; @endphp
+            @foreach($brands as $brand)
+            <div class="card-collapse">
+              <div class="card-header" role="tab" id="heading-{{ $a }}">
+                <h5 class="mb-0">
+                  <a data-toggle="collapse" href="#collapse-{{ $a }}" aria-expanded="@if($a == 1) true @else false @endif" aria-controls="collapseOne" class="@if($a == 1) collapsed @endif">
+                    <img width="15px" src="/assets/img/move.png">
+                    {{ $brand->name }}
+                    <i class="material-icons">keyboard_arrow_down</i>
+                  </a>
+                </h5>
+              </div>
+              <div id="collapse-{{ $a }}" class="collapse @if($a == 1) show @endif" role="tabpanel" aria-labelledby="heading-{{ $a }}" data-parent="#accordion" style="">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <a class="btn btn-success" href="#"> + Ավելացնել կատեգորիա</a>
+                        </div>
+                        <div class="col-4">
+                            <a class="btn btn-danger" href="#" onclick="event.preventDefault(); document.getElementById('destroy-form').submit();">Ջնջել</a>
+                            <form id="destroy-form" action="{{ route('admin.brand.destroy', ['brand' => $brand->id]) }}" method="POST" style="display: none;">
+                                @method('DELETE')
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+              </div>
+            </div>
+
+            @php $a++; @endphp
+            @endforeach
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="card-title">Navigation Pills Icons -
+            <small class="description">Vertical Tabs</small>
+          </h4>
+        </div>
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <!--
+                        color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+                    -->
+              <ul class="nav nav-pills nav-pills-rose nav-pills-icons flex-column" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#link110" role="tablist">
+                    <i class="material-icons">dashboard</i> Home
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#link111" role="tablist">
+                    <i class="material-icons">schedule</i> Settings
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-8">
+              <div class="tab-content">
+                <div class="tab-pane active" id="link110">
+                  Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
+                  <br>
+                  <br> Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
+                  <br>
+                  <br> Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
+                </div>
+                <div class="tab-pane" id="link111">
+                  Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                  <br>
+                  <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
         
 
 @endsection
 
 @section('scripts')
 <script>
-    $('#sortable').sortable();
-    $('#sortable').sortable({
+    $('#accordion').sortable();
+    $('#accordion').sortable({
         update: function(event, ui) {
             var brand = $('.brand')
             ids = [];
