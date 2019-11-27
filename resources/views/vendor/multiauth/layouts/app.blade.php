@@ -56,6 +56,12 @@
                   <p>Brands</p>
                 </a>
               </li>
+              <li class="nav-item @if(Request::segment(2) == 'product') active @endif ">
+                <a class="nav-link" href="{{ route('admin.product.index') }}">
+                  <i class="material-icons">devices_other</i>
+                  <p>Products</p>
+                </a>
+              </li>
 
 
               {{-- logout --}}
@@ -143,8 +149,6 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
       <!-- Library for adding dinamically elements -->
       <script src="/assets/js/plugins/arrive.min.js"></script>
-      <!--  Google Maps Plugin    -->
-      <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
       <!-- Chartist JS -->
       <script src="/assets/js/plugins/chartist.min.js"></script>
       <!--  Notifications Plugin    -->

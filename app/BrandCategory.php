@@ -11,4 +11,18 @@ class BrandCategory extends Model
         'image',
         'sort',
     ];
+
+    public function getTranslatedData(){
+        
+    }
+    public function translate($lang, $field){
+        $lang_id = \App\Language::findOrFail($lang);
+        $translation = BrandCategory::where('language_id', $lang_id->id)->first();
+        return $translation->{$field} ?? '';
+    }
+
+    public function translations()
+    {
+        return $this->hasMany(\App\BrandCategoryTranslation::class);
+    }
 }
