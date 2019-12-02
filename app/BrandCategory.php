@@ -16,13 +16,18 @@ class BrandCategory extends Model
         
     }
     public function translate($lang, $field){
-        $lang_id = \App\Language::findOrFail($lang);
-        $translation = BrandCategory::where('language_id', $lang_id->id)->first();
+        $lang_id = \App\Language::where('prefix', $lang)->first();
+        $translation = BrandCategoryTranslation::where('language_id', $lang_id->id)->where('brand_category_id', $this->id)->first();
         return $translation->{$field} ?? '';
     }
 
     public function translations()
     {
         return $this->hasMany(\App\BrandCategoryTranslation::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(\App\Product::class)->with('colors', 'storages');
     }
 }

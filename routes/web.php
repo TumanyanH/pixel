@@ -32,4 +32,5 @@ Route::name('admin.')->prefix('admin')->middleware('role:super')->group( functio
 
     // products
     Route::resource('product', 'ProductController');
+    Route::get('/product/{id}/showAllProducts', 'ProductController@showAllProducts')->name('product.showAllProducts');
 });

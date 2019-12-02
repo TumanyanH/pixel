@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -59,7 +60,7 @@ class Controller extends BaseController
             'և'=>'ev',
             'Օ'=>'O', 'օ'=>'o',
             'Ֆ'=>'F', 'ֆ'=>'f', );
-        $value = Str::slug(strtr(implode('-',$string), $normalizeChars));
+        $value = Str::slug(strtr($string, $normalizeChars));
         return $value === '' ? null : $value;
     }
 }

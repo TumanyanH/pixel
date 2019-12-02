@@ -174,7 +174,7 @@ class BrandController extends Controller
      */
     public function getCategoryDetails(Request $request)
     {
-        $details = BrandCategory::with('translations')->findOrFail($request->id);
+        $details = BrandCategory::with('translations', 'products')->findOrFail($request->id);
         return json_encode($details);
     }
 
