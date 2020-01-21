@@ -7,18 +7,24 @@
       <link rel="icon" type="image/png" href="/assets/img/favicon.png">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       <title>
-        Material Dashboard by Creative Tim
+        Կառավարման վահանակ
       </title>
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    
       <!--     Fonts and icons     -->
       <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    
       <!-- CSS Files -->
       <link href="/assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
       <link href="/assets/css/jquery-ui.css" rel="stylesheet">
       
-   </head>
+      {{-- froala --}}
+      <link href="/assets/froala/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+      <script type="text/javascript" src="/assets/froala/js/froala_editor.pkgd.min.js"></script>
+   
+    </head>
     
     <body class="">
       <div class="wrapper ">
@@ -30,10 +36,10 @@
         -->
           <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-              CT
+              PS
             </a>
             <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-              Creative Tim
+              Pixel Store
             </a>
           </div>
           <div class="sidebar-wrapper">
@@ -41,27 +47,46 @@
               <li class="nav-item @if(Request::segment(2) == 'home') active @endif ">
                 <a class="nav-link" href="{{ route('admin.home') }}">
                   <i class="material-icons">dashboard</i>
-                  <p>Dashboard</p>
+                  <p>Կառավարման վահանակ</p>
                 </a>
               </li>
               <li class="nav-item @if(Request::segment(2) == 'homepage') active @endif ">
                 <a class="nav-link" href="{{ route('admin.homepage.index') }}">
                   <i class="material-icons">home</i>
-                  <p>Homepage</p>
+                  <p>Գլխավոր էջ</p>
                 </a>
               </li>
               <li class="nav-item @if(Request::segment(2) == 'brand') active @endif ">
                 <a class="nav-link" href="{{ route('admin.brand.index') }}">
                   <i class="material-icons">branding_watermark</i>
-                  <p>Brands</p>
+                  <p>Կատեգորիաներ</p>
                 </a>
               </li>
-              <li class="nav-item @if(Request::segment(2) == 'product') active @endif ">
+              <li class="nav-item @if(Request::segment(2) == 'product' || Request::segment(2) == 'product-other') active @endif ">
                 <a class="nav-link" href="{{ route('admin.product.index') }}">
                   <i class="material-icons">devices_other</i>
-                  <p>Products</p>
+                  <p>Ապրանքներ</p>
                 </a>
               </li>
+              <li class="nav-item @if(Request::segment(2) == 'order') active @endif ">
+                <a class="nav-link" href="{{ route('admin.order.index') }}">
+                  <i class="material-icons">shopping_cart</i>
+                  <p>Պատվերներ</p>
+                </a>
+              </li>
+              <li class="nav-item @if(Request::segment(2) == 'info') active @endif ">
+                <a class="nav-link" href="{{ route('admin.info.index') }}">
+                  <i class="material-icons">info</i>
+                  <p>Ընդհանուր <br> տեղեկատվություն</p>
+                </a>
+              </li>
+              <li class="nav-item @if(Request::segment(2) == 'privacy-policy') active @endif ">
+                <a class="nav-link" href="{{ route('admin.privacy-policy.askLanguages') }}">
+                  <i class="material-icons">policy</i>
+                  <p>Օգտագործման պայմաններ</p>
+                </a>
+              </li>
+              
 
 
               {{-- logout --}}
@@ -69,7 +94,7 @@
                 <a class="nav-link" href="/admin/logout"  onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                   <i class="material-icons">logout</i>
-                  <p>Logout</p>
+                  <p>Դուրս գալ</p>
                   <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
@@ -86,7 +111,7 @@
           <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div class="container-fluid">
               <div class="navbar-wrapper">
-                <a class="navbar-brand" href="#pablo">Dashboard</a>
+                <a class="navbar-brand" href="#pablo">Կառավարման վահանակ</a>
               </div>
               <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
@@ -96,11 +121,11 @@
               </button>
               <div class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                       <i class="material-icons">notifications</i> Notifications
                     </a>
-                  </li>
+                  </li> --}}
                   <!-- your navbar here -->
                 </ul>
               </div>

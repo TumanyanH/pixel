@@ -10,7 +10,9 @@
     <div class="card-body">
         <h5 class="card-title">{{ $product->name }}</h5>
         <p class="card-text">{{ $product->sale_price }} դրամ</p>
+        @if($product->sale_discount != 0)
         <p style="text-decoration: line-through;" class="card-text">{{ $product->price }} դրամ</p>
+        @endif
         <a href="{{ route('admin.product.show', ['product' => $product->id]) }}" class="btn btn-primary">Մանրամասներ</a>
     </div>
 </div>

@@ -13,8 +13,13 @@
 @endif
 <form action="{{ route('admin.brand.store') }}" method="POST">
     @csrf
+    <select class="selectpicker" name="isCategory">
+      <option disabled selected>Տեսակը</option>
+      <option value="1">Կատեգորիա</option>
+      <option value="0">Բրենդ</option>
+    </select>
     <div class="form-group bmd-form-group">
-        <label for="add-brand" class="bmd-label-floating">Բրենդի անուն</label>
+        <label for="add-brand" class="bmd-label-floating">Կատեգորիայի անուն</label>
         <input id="add-brand" name="name" type="text" class="form-control">
     </div>
     <button class="btn btn-success">Ավելացնել</button>
@@ -26,7 +31,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Բրենդներ</h4>
+          <h4 class="card-title">Կատեգորիաներ</h4>
         </div>
         <div class="card-body">
           <div id="accordion" role="tablist">

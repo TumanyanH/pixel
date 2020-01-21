@@ -35,7 +35,7 @@
                     <div class="col-10">
                         <input type="number" class="form-control" id="exampleStorageLabel" name="storages[]">
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 add-storage-button-block">
                         <button type="button" class="add-storage-input btn btn-success">+</button>
                     </div>
                 </div>
@@ -72,6 +72,8 @@
                 </div>
             </div>
             
+
+            
             <button type="button" class="add-color-input btn btn-success">+ Ավելացնել գույն</button>
         </div>
         <button class="btn btn-lg btn-primary float-right" type="submit">Ավելացնել</button>
@@ -86,12 +88,14 @@
         $('.add-storage-input').click(function() {
             var example_storage = $('.example-storage').clone();
             example_storage.removeClass('example-storage');
-            $('.storages').prepend(example_storage);
+            example_storage.find('#exampleStorageLabel').val('');
+            example_storage.find('.add-storage-button-block').remove()
+            $('.storages').append(example_storage);
         })
         $('.add-color-input').click(function() {
             var example_color = $('.example-color').clone();
             example_color.removeClass('example-color');
-            $('.colors').prepend(example_color);
+            $('.colors').append(example_color);
         })
     })
 </script>

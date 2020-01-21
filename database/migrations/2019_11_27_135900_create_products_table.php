@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('price')->nullbale();
             $table->integer('sale_discount')->nullable();
             $table->integer('sale_price')->nullbale();
+            $table->integer('visible')->default(0);
             $table->timestamps();
         });
 

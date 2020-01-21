@@ -16,7 +16,6 @@ class CreateProductDescriptionsTable extends Migration
         Schema::create('product_descriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('product_id')->default(1);
-            $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

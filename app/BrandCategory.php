@@ -30,4 +30,9 @@ class BrandCategory extends Model
     {
         return $this->hasMany(\App\Product::class)->with('colors', 'storages');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(\App\Brand::class);
+    }
 }

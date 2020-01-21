@@ -573,14 +573,16 @@ ul {
                     <div class="product_description">
                         
                         <div class="product_name">{{ $product->name }}</div>
-                        <div> <span class="product_price">@if($product->sale_price) {{ $product->sale_price }} դրամ @else {{ $product->price }} դրամ @endif</span> <strike class="product_discount"> <span style='color:black'>@if($product->price) {{ $product->price }} դրամ @endif<span> </strike> </div>
-                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'>@if($product->sale_discount) {{ $product->sale_discount }} % @endif<span> </div>
+                        <div> <span class="product_price">@if($product->sale_price) {{ $product->sale_price }} դրամ @else {{ $product->price }} դրամ @endif</span> @if($product->sale_discount > 0) <strike class="product_discount"> <span style='color:black'>@if($product->price) {{ $product->price }} դրամ @endif<span> </strike> @endif</div>
+                        @if($product->sale_discount > 0)
+                        <div> <span class="product_saved">Զեղջ:</span> <span style='color:black'>@if($product->sale_discount) {{ $product->sale_discount }} % @endif<span> </div>
+                        @endif
                         <hr class="singleline">
                         <div> <span class="product_info"> </span> </div>
                         <div>
                             <div class="row" style="margin-top: 15px;">
-                                <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">Հիշողության տարբերակներ</span><br> @foreach($product->storages as $storage) <button class="btn btn-primary btn-sm">{{ $storage->storage }} GB</button> @endforeach </div>
-                                <div class="col-xs-6" style="margin-left: 55px;"> <span class="product_options">Գույների տարբերակներ</span><br> @foreach($product->colors as $color) <div style="width: 30px; height:30px; border-radius: 50%; background-color: {{ $color->color }} ; display:inline-block;"></div> @endforeach</div>
+                                <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">Հիշողության տարբերակներ</span><br> @foreach($product->storages->sortBy('storage') as $storage) <button class="btn btn-primary btn-sm">{{ $storage->storage }} GB</button> @endforeach </div>
+                                <div class="col-xs-6" style="margin-left: 55px;"> <span class="product_options">Գույների տարբերակներ</span><br> @foreach($product->colors as $color) <div style="width: 30px; height:30px; border-radius: 50%; background-color: {{ $color->color }} ; display:inline-block; border: 1px solid black; "></div> @endforeach</div>
                             </div>
                         </div>
                         <hr class="singleline">
@@ -588,8 +590,21 @@ ul {
                             <form action="#">
                         </div>
                         <p>Ստեղծվել է - {{ $product->created_at }}</p>
+                        @if($product->created_at == $product->updated_at)
+                        Չի Խմբագրվել
+                        @else
                         <p>Խմբագրվել է - {{ $product->updated_at }}</p>
-                        
+                        @endif
+                        <div class="row">
+                            <a href="{{ route('admin.product.edit', ['product' => $product->id]) }}" class="btn btn-primary">Խմբագրվել</a>
+                            <a href="{{ route('admin.product.configuration.showConfigurations', ['product' => $product->id]) }}" class="btn btn-primary">Կոնֆիգուրացիաներ</a>
+                            <a href="#" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('destroy-form-main-product').submit();">Ջնջել</a>
+                            <form action=""></form>
+                            <form action="{{ route('admin.product.destroy', ['product' => $product->id]) }}" id="destroy-form-main-product" method="post">
+                                @csrf 
+                                @method('DELETE')
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -598,8 +613,101 @@ ul {
                 <div class="col-md-6"> <span class=" deal-text">Տեխնիկական բնութագիր</span> </div>
                 <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
             </div>
-            <button class="btn btn-success"> + Ավելացնել բնութագիր</button>
+            @if($product->descriptions->count() < 2)
+            <a class="btn btn-success" href="{{ route('admin.product.description.create', ['product_id' => $product->id]) }}"> + Ավելացնել բնութագիր</a>
+            @endif
 
+            <div class="row">
+                    <div class="col-12">
+                        <div class="card ">
+                            <div class="card-body ">
+                            <ul class="nav nav-pills nav-pills-warning" role="tablist">
+                                @php $a = 1; @endphp
+                                @foreach($product->descriptions as $description)
+                                <li class="nav-item">
+                                    <a class="nav-link @if($a == 1) active @endif" data-toggle="tab" href="#lang{{ $description->id }}" role="tablist">
+                                        {{ $description->translate('am', 'name') }}
+                                    </a>
+                                </li>
+                                @php $a++; @endphp
+                                @endforeach
+                            </ul>
+                            <div class="tab-content tab-space">
+                                @php $a = 1; @endphp
+                                @foreach($product->descriptions as $description)
+                                <div class="tab-pane @if($a == 1) active @endif" id="lang{{ $description->id }}">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card ">
+                                                        <div class="card-body ">
+                                                        <ul class="nav nav-pills nav-pills-warning" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" data-toggle="tab" href="#langdesc1-{{ $description->id }}" role="tablist">
+                                                                    {!! $description->translate('am', 'name') !!}
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-toggle="tab" href="#langdesc2-{{ $description->id }}" role="tablist">
+                                                                    {!! $description->translate('ru', 'name') !!}
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-toggle="tab" href="#langdesc3-{{ $description->id }}" role="tablist">
+                                                                    {!! $description->translate('en', 'name') !!}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tab-content tab-space">
+                                                            <div class="tab-pane active" id="langdesc1-{{ $description->id }}">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        {!! $description->translate('am', 'description') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane" id="langdesc2-{{ $description->id }}">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        {!! $description->translate('ru', 'description') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane" id="langdesc3-{{ $description->id }}">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        {!! $description->translate('en', 'description') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="btn btn-primary" href="{{ route('admin.product.description.edit', ['description' => $description->id]) }}">Խմբագրվել</a>
+                                            <a class="btn btn-danger" href="#" onclick="event.preventDefault(); document.getElementById('destroy-form-{{$description->id}}').submit();">Ջնջել</a>
+                                            <form action=""></form>
+                                            <form id="destroy-form-{{$description->id}}" action="{{ route('admin.product.description.destroy', ['description' => $description->id]) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                            </form>
+                                        </div>
+                                        <div class="col-6">
+                                            <img width="100%" src="/uploads/descriptions/{{ $description->image }}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                @php $a++; @endphp
+                                @endforeach
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
