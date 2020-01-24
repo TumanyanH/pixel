@@ -86,7 +86,13 @@
                   <p>Օգտագործման պայմաններ</p>
                 </a>
               </li>
-              
+
+              <li class="nav-item @if(Request::segment(2) == 'password') active @endif ">
+                <a class="nav-link" href="{{ route('admin.password.change') }}">
+                  <i class="material-icons">settings_applications</i>
+                  <p>Փոխել գաղտնաբառը</p>
+                </a>
+              </li>
 
 
               {{-- logout --}}
