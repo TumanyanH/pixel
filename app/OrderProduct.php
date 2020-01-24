@@ -12,4 +12,13 @@ class OrderProduct extends Model
         'product_configuration_id',
         'quantity',
     ];
+
+    /** 
+     * RELATIONS
+     */
+    public function product()
+    {
+        $this->hasOne(\App\Product::class);        
+    }
+
 }

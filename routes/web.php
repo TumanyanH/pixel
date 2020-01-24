@@ -55,6 +55,8 @@ Route::name('admin.')->namespace('Admin')->prefix('admin')->middleware('role:sup
     Route::resource('privacy-policy', 'PolicyController');
     Route::resource('order', 'OrderController');
 
+    Route::get('/admin/order/{id}/details', 'OrderController@getDetails');
+
     Route::resource('info', 'InfoController');
     
 });

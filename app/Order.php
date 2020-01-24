@@ -15,4 +15,13 @@ class Order extends Model
         'status',
         'message'
     ];
+
+    /** 
+     * RELATIONS
+     */
+    public function products()
+    {
+        return $this->hasMany(\App\OrderProduct::class)->with('product');
+    }
+
 }
