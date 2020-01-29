@@ -86,6 +86,12 @@
                   <p>Օգտագործման պայմաններ</p>
                 </a>
               </li>
+              <li class="nav-item @if(Request::segment(2) == 'about-us') active @endif ">
+                <a class="nav-link" href="{{ route('admin.about-us.askLanguages') }}">
+                  <i class="material-icons">web</i>
+                  <p>Մեր մասին</p>
+                </a>
+              </li>
 
               <li class="nav-item @if(Request::segment(2) == 'password') active @endif ">
                 <a class="nav-link" href="{{ route('admin.password.change') }}">

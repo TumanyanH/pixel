@@ -10,10 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('Main')->group( function() {
+    Route::get('/', 'IndexController@home');
+    
 });
+
+Route::get('/about-us', function() {
+    return view('about');
+})->name('about-us');
 
 Route::name('admin.')->namespace('Admin')->prefix('admin')->middleware('role:super')->group( function() {
     // homepage
@@ -56,6 +60,10 @@ Route::name('admin.')->namespace('Admin')->prefix('admin')->middleware('role:sup
     Route::resource('order', 'OrderController');
 
     Route::get('/admin/order/{id}/details', 'OrderController@getDetails');
+
+
+    Route::get('about-us/languages', 'AboutUsController@askLanguages')->name('about-us.askLanguages');
+    Route::resource('about-us', 'AboutUsController');
 
     Route::resource('info', 'InfoController');
     
